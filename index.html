@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodger Pro Max - Game Phiêu Lưu Python</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-top: 30px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+            animation: pulse-button 2s infinite;
+        }
+        
+        @keyframes pulse-button {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .play-button:hover {
+            background: #ff5252;
+            transform: scale(1.08);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.6);
+            animation: none;
+        }
+        
+        .content {
+            padding: 50px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 10px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+        
+        .feature-card h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .controls {
+            background: #f0f4ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .controls h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .control-item {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        
+        .control-key {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-right: 15px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .difficulty-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .difficulty-list li {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-left: 4px solid #764ba2;
+            padding-left: 20px;
+        }
+        
+        .difficulty-list .easy {
+            border-left-color: #4caf50;
+        }
+        
+        .difficulty-list .normal {
+            border-left-color: #ff9800;
+        }
+        
+        .difficulty-list .hard {
+            border-left-color: #f44336;
+        }
+        
+        .difficulty-list .insane {
+            border-left-color: #9c27b0;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+        
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎮 DODGER PRO MAX</h1>
+            <p class="subtitle">Trò chơi phiêu lưu Python - Giải cứu chim cánh cụt</p>
+            <a href="https://replit.com/github/YourUsername/Dodger-main" class="play-button">▶️ CHƠI NGAY TRÊN WEB</a>
+        </div>
+        
+        <div class="content">
+            <!-- About Section -->
+            <div class="section">
+                <h2>📖 Về Game</h2>
+                <p style="font-size: 1.1em; line-height: 1.8; color: #555;">
+                    <strong>Dodger Pro Max</strong> là một trò chơi nhập vai 2D hấp dẫn, 
+                    nơi bạn trở thành một chim cánh cụt dũng cảm. Hãy thu thập tất cả những 
+                    đồng xu quý giá, trả lời câu hỏi Python đầy thử thách, và chinh phục các 
+                    tầng độ khó khác nhau. Bạn sẵn sàng trở thành tìm kiếm gần đúng tối cao?
+                </p>
+            </div>
+            
+            <!-- Features -->
+            <div class="section">
+                <h2>✨ Tính Năng Chính</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><span class="emoji">🪙</span>Thu Thập Xu</h3>
+                        <p>Thu thập tất cả những đồng xu trên bản đồ và mở cổng thoát để chiến thắng.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="emoji">🐍</span>Câu Hỏi Python</h3>
+                        <p>Trả lời câu hỏi về lập trình Python để tồn tại nhân đôi khi gặp quái vật.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="emoji">⚡</span>Quyền Năng</h3>
+                        <p>Khô Shield, Speed, Jump, và Slow - mỗi quyền năng có tác dụng riêng!</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="emoji">😈</span>Quái Vật AI</h3>
+                        <p>Gặp phải những kẻ thù thông minh với hành động truy đuổi động.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="emoji">🎯</span>4 Độ Khó</h3>
+                        <p>Easy, Normal, Hard, Insane - thách thức bản thân ở mọi mức độ.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="emoji">🗺️</span>Đa Bản Đồ</h3>
+                        <p>Khám phá nhiều bản đồ với thiết kế độc đáo và những vật cản có vị.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- How to Play -->
+            <div class="section">
+                <h2>🎮 Cách Chơi</h2>
+                <div class="controls">
+                    <h3>Điều Khiển</h3>
+                    <div class="control-item">
+                        <span class="control-key">← →</span>
+                        <span>Chuyển động trái/phải</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">SPACE</span>
+                        <span>Nhảy (bấm 2 lần để nhảy kép)</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">ESC</span>
+                        <span>Tạm dừng game</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="control-key">ENTER</span>
+                        <span>Khi gặp quái vật: xác nhận câu trả lời</span>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px; color: #667eea;">Mục Tiêu</h3>
+                <p style="color: #666; line-height: 1.8;">
+                    1️⃣ <strong>Thu thập tất cả các đồng xu</strong> trên bản đồ<br>
+                    2️⃣ <strong>Tránh hoặc đánh bại quái vật</strong> bằng cách trả lời câu hỏi Python<br>
+                    3️⃣ <strong>Đến cổng thoát</strong> khi đã thu thập hết xu<br>
+                    4️⃣ <strong>Chiến thắng</strong> và đạt điểm cao!
+                </p>
+            </div>
+            
+            <!-- Powerups -->
+            <div class="section">
+                <h2>🌟 Hệ Thống Quyền Năng</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>🛡️ Shield</h3>
+                        <p>Bảo vệ bản thân khỏi quái vật một lần. Khi được bảo vệ, bạn không thất bại!</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>⚡ Speed</h3>
+                        <p>Tăng tốc độ chuyển động gấp đôi để trốn tránh hoặc nhanh chóng thu thập xu.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🔼 Jump</h3>
+                        <p>Tăng độ cao nhảy để tới những vị trí khó tiếp cận hoặc vượt qua chướng ngại vật.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🐢 Slow</h3>
+                        <p>Làm chậm tốc độ của quái vật để có thêm thời gian thoát thoát.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Difficulty Levels -->
+            <div class="section">
+                <h2>🎯 Độ Khó</h2>
+                <ul class="difficulty-list">
+                    <li class="easy"><strong>Easy 🟢</strong> - Quái vật chuyển động chậm, tốc độ 3 px/frame. Hoàn hảo để bắt đầu!</li>
+                    <li class="normal"><strong>Normal 🟡</strong> - Cân bằng về thách thức. Quái vật cao chiều tăng từng bước.</li>
+                    <li class="hard"><strong>Hard 🔴</strong> - Quái vật nhanh (tốc độ 7 px/frame). Cần kỹ năng tốt!</li>
+                    <li class="insane"><strong>Insane 💜</strong> - Mode cực khó với quái vật siêu nhanh (tốc độ 9 px/frame). Chỉ dành cho cao thủ!</li>
+                </ul>
+            </div>
+            
+            <!-- Tech Stack -->
+            <div class="section">
+                <h2>🛠️ Công Nghệ</h2>
+                <p style="color: #666; line-height: 1.8;">
+                    <strong>Python 3.12</strong> - Ngôn ngữ lập trình chính<br>
+                    <strong>Pygame 2.6.1</strong> - Thư viện game 2D<br>
+                    <strong>Modular Design</strong> - Hệ thống module riêng biệt (Characters, Items, Enemies)<br>
+                    <strong>Optimized Rendering</strong> - Hiệu suất cao với caching và batch rendering
+                </p>
+            </div>
+            
+            <!-- Installation -->
+            <div class="section">
+                <h2>💻 Cách Chơi & Cài Đặt</h2>
+                
+                <h3 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">🌐 Cách 1: Chơi Trực Tiếp Trên Web (Dễ Nhất!)</h3>
+                <p style="color: #666; line-height: 1.8; margin-bottom: 15px;">
+                    Bạn không cần cài đặt gì cả! Chỉ cần click nút "CHƠI NGAY TRÊN WEB" ở trên để chơi game 
+                    thẳng trên trình duyệt bằng Replit. Không cần cài Python, Pygame hay bất cứ gì khác!
+                </p>
+                <a href="https://replit.com/github/YourUsername/Dodger-main" style="display: inline-block; background: #4caf50; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; margin-bottom: 30px;">
+                    🚀 Mở Trên Replit Ngay
+                </a>
+                
+                <h3 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">📥 Cách 2: Cài Đặt Trên Máy Tính</h3>
+                <p style="color: #666; line-height: 1.8; margin-bottom: 15px;">
+                    Nếu bạn muốn chơi offline hoặc có máy tính riêng:
+                </p>
+                <div style="background: #1e1e1e; color: #00ff00; padding: 20px; border-radius: 10px; font-family: 'Courier New', monospace; overflow-x: auto;">
+                    <div># 1. Clone repository</div>
+                    <div>git clone https://github.com/YourUsername/Dodger-main.git</div>
+                    <div>cd Dodger-main</div>
+                    <div><br></div>
+                    <div># 2. Cài đặt Pygame</div>
+                    <div>pip install pygame</div>
+                    <div><br></div>
+                    <div># 3. Chạy game</div>
+                    <div>python dodger.py</div>
+                </div>
+                
+                <h3 style="color: #667eea; margin-top: 25px; margin-bottom: 15px;">⚙️ Setup Replit (Nếu Tự Tạo)</h3>
+                <ol style="color: #666; line-height: 2;">
+                    <li>1. Truy cập <a href="https://replit.com" style="color: #667eea;">https://replit.com</a></li>
+                    <li>2. Click "Import from GitHub" → Dán link repo: <code style="background: #f0f0f0; padding: 2px 6px;">https://github.com/YourUsername/Dodger-main</code></li>
+                    <li>3. Chọn Python, Replit tự cài Pygame</li>
+                    <li>4. Click "Run" → Game sẽ chạy ngay lập tức!</li>
+                    <li>5. Chia sẻ link Replit với bạn bè để họ chơi online</li>
+                </ol>
+            </div>
+            
+            <!-- Credits -->
+            <div class="section">
+                <h2>🙏 Ghi Nhận</h2>
+                <p style="color: #666; line-height: 1.8;">
+                    Phát triển bởi: <strong>Dodger Dev Team</strong><br>
+                    Phiên bản: <strong>Pro Max v2.0</strong><br>
+                    Cập nhật: <strong>Tháng 3, 2026</strong><br><br>
+                    Cảm ơn tất cả những người chơi và đóng góp cho sự phát triển của game! 🎉
+                </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🐧 <strong>DODGER PRO MAX</strong> - Một tác phẩm của cộng đồng lập trình Python</p>
+            <p style="margin-top: 10px; font-size: 0.95em;">
+                📧 Email: support@dodgergame.vn | 
+                <a href="https://github.com">🔗 GitHub</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
